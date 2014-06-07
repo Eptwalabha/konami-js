@@ -5,7 +5,7 @@ Well... for fun.
 I made it to practice javascript and TDD.
 
 ## How does it work?
-It's simple... realy:  
+It's simple... really:  
 
   1. Load the script <code>src/Konami.js</code> on your page.  
   2. Create a new konami and give it as parameter the function you want konami to trigger  
