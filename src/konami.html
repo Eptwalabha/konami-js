@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>konami code</title>
+    <script src="./Konami.js"></script>
+    <style>
+        body {text-align: center;}
+    </style>
+</head>
+<body>
+    <h1>Has konami code been performed?</h1>
+    <h2 id="title">Nope! Not yet...</h2>
+    <script>
+
+        var changeTitleToYes = function() {
+            document.getElementById("title").innerText = "Yes!";
+        };
+        new Konami(changeTitleToYes);
+
+    </script>
+</body>
+</html>

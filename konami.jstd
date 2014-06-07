@@ -1,0 +1,4 @@
+load:
+  - src/Konami.js
+test:
+  - test/KonamiTest.js
