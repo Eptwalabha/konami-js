@@ -5,18 +5,49 @@
     <title>konami code</title>
     <script src="./Konami.js"></script>
     <style>
-        body {text-align: center;}
+        body {text-align: center;font: 13px Helvetica;}
+        #infos {font-style: italic;font-size: smaller;}
+
     </style>
 </head>
 <body>
     <h1>Has konami code been performed?</h1>
     <h2 id="title">Nope! Not yet...</h2>
+    <form>
+        <label for="input">Try konami in the textbox: </label><input type="text" id="input" />
+        <p id="infos"></p>
+        <button onclick="resetThePage();return false;">Reset the page</button>
+    </form>
     <script>
 
+        var title = document.getElementById("title");
+        var input = document.getElementById("input");
+        var infos = document.getElementById("infos");
+
         var changeTitleToYes = function() {
-            document.getElementById("title").innerText = "Yes!";
+            title.innerText = "Yes!";
         };
+
+        var changeInputContent = function() {
+            input.value = "Konami!";
+            infos.innerHTML = "You may have noticed the title also triggered, it is because we are inside the body element!";
+        };
+
+        var resetThePage = function() {
+            title.innerText = "Nope! Not yet...";
+            input.value = "";
+            infos.innerText = "";
+        };
+
+        /**
+         * By default Konami will listen to key stroke within the document.body element.
+         */
         new Konami(changeTitleToYes);
+
+        /**
+         * When a DOM element is passed as parameter, konami will only register key strokes when this element has the focus.
+         */
+        new Konami(changeInputContent, input);
 
     </script>
 </body>

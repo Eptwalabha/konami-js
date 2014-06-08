@@ -27,7 +27,6 @@ KonamiTest = TestCase("KonamiTest", {
     "test konami remove the oldest input first": function() {
         this.konami.inputs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         this.konami.addKeyCode(11);
-        assertEquals(2, this.konami.inputs[0]);
         assertEquals([2, 3, 4, 5, 6, 7, 8, 9, 10, 11], this.konami.inputs);
     },
 
