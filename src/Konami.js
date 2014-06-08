@@ -1,12 +1,23 @@
-Konami = function(functionToCall, element) {
+Konami = function(functionToCall, element, propagation) {
     this.inputs = [];
     this.konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
     this.functionToCall = functionToCall;
 
-    var konami = this;
-    if (element === undefined)
+    if (element === undefined) {
         element = document.body;
-    element.onkeyup = function(event) {konami.addKeyCode(event.keyCode);};
+    }
+    if (propagation === undefined) {
+        propagation = true;
+    }
+
+    var konami = this;
+    element.onkeyup = function(event) {
+        konami.addKeyCode(event.keyCode);
+        if (!propagation) {
+            event.stopPropagation();
+            event.cancelBubble = true
+        }
+    }
 };
 
 Konami.prototype.addKeyCode = function(input) {

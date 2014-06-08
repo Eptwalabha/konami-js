@@ -6,7 +6,9 @@
     <script src="./Konami.js"></script>
     <style>
         body {text-align: center;font: 13px Helvetica;}
-        #infos {font-style: italic;font-size: smaller;}
+        p {font-style: italic;font-size: smaller;}
+        .hide {display: none;}
+        .triggered {background-color: #88eb9a;}
 
     </style>
 </head>
@@ -14,29 +16,55 @@
     <h1>Has konami code been performed?</h1>
     <h2 id="title">Nope! Not yet...</h2>
     <form>
-        <label for="input">Try konami in the textbox: </label><input type="text" id="input" />
-        <p id="infos"></p>
+        <div id="div1">
+            <label for="input1">with propagation: </label><input type="text" id="input1"/>
+            <p class="hide">You may have noticed the title also triggered, it is because we are inside the body element!</p>
+        </div>
+        <div id="div2">
+            <label for="input2">without propagation: </label><input type="text" id="input2"/>
+            <p class="hide">Nothing but this element has triggered, it is because we disabled the propagation!</p>
+        </div>
         <button onclick="resetThePage();return false;">Reset the page</button>
     </form>
     <script>
 
-        var title = document.getElementById("title");
-        var input = document.getElementById("input");
-        var infos = document.getElementById("infos");
-
         var changeTitleToYes = function() {
+            var title = document.getElementsByTagName("h2")[0];
             title.innerText = "Yes!";
+            title.setAttribute("class", "triggered");
         };
 
-        var changeInputContent = function() {
-            input.value = "Konami!";
-            infos.innerHTML = "You may have noticed the title also triggered, it is because we are inside the body element!";
+        var triggerKonami = function(domElement) {
+            domElement.getElementsByTagName('input')[0].value = "Konami!";
+            domElement.getElementsByTagName('p')[0].setAttribute("class", "");
+            domElement.setAttribute("class", "triggered");
+        };
+
+        var function1 = function() {
+            triggerKonami(document.getElementById("div1"));
+        };
+
+        var function2 = function() {
+            triggerKonami(document.getElementById("div2"));
         };
 
         var resetThePage = function() {
-            title.innerText = "Nope! Not yet...";
-            input.value = "";
-            infos.innerText = "";
+            document.getElementById("title").innerText = "Nope! Not yet...";
+
+            var triggeredElements = document.getElementsByClassName('triggered');
+            var pElements = document.getElementsByTagName('p');
+            var inputElements = document.getElementsByTagName('input');
+
+            for (var i = 0, size = pElements.length; i < size; i++) {
+                triggeredElements[i].setAttribute("class", "");
+            }
+
+            for (i = 0, size = pElements.length; i < size; i++) {
+                pElements[i].setAttribute("class", "hide");
+            }
+            for (i = 0, size = inputElements.length; i < size; i++) {
+                inputElements[i].value = "";
+            }
         };
 
         /**
@@ -47,7 +75,12 @@
         /**
          * When a DOM element is passed as parameter, konami will only register key strokes when this element has the focus.
          */
-        new Konami(changeInputContent, input);
+        new Konami(function1, document.getElementById("input1"));
+
+        /**
+         * The third parameter is the propagation of the konami code, if false, all element above on the DOM won't receive any event.
+         */
+        new Konami(function2, document.getElementById("input2"), false);
 
     </script>
 </body>
